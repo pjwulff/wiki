@@ -36,8 +36,8 @@ def get_stats():
                     csv = "%s,\"%s\",%u,%u\n" % \
                         (data["articleinfo"]["project"],
                          name,
-                         data["prose"]["words"],
-                         data["prose"]["references"])
+                         data["articleinfo"]["revisions"],
+                         data["prose"]["words"])
                     f.write(csv)
                     if len(name) < 64:
                         name += " " * (64 - len(name))
@@ -53,6 +53,7 @@ def get_stats():
                     print(err)
 
 with open("data.csv", "a") as f:
+    f.write("Project,Name,Revisions,Length\n")
     threads = [threading.Thread(target=get_stats) for n in range(num_threads)]
     [x.start() for x in threads]
     [x.join() for x in threads]
