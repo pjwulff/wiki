@@ -4,7 +4,7 @@ import threading
 import time
 import urllib.parse, urllib.request
 
-codes = ["en", "de", "fr", "ru", "it", "es", "pl", "ja", "zh", "pt"]
+codes = ["en", "de"]
 random_template = "https://%s.wikipedia.org/wiki/Special:Random"
 types = ["articleinfo", "prose"]
 url_template = "https://xtools.wmflabs.org/api/page/%s/%s.wikipedia.org/%s"
@@ -33,11 +33,9 @@ def get_stats():
                             time.sleep(num_threads / 500.)
                     ##f.write(json.dumps(data) + "\n")
                     name = urllib.parse.unquote(name)
-                    csv = "%s,\"%s\",%u,%u,%u,%u\n" % \
+                    csv = "%s,\"%s\",%u,%u\n" % \
                         (data["articleinfo"]["project"],
                          name,
-                         data["articleinfo"]["revisions"],
-                         data["articleinfo"]["editors"],
                          data["prose"]["words"],
                          data["prose"]["references"])
                     f.write(csv)
