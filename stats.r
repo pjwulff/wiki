@@ -1,9 +1,58 @@
-#attach(data)
-data = read.csv("~/uni/1014CSG/wikistats/data.csv")
+attach(data)
+#data = read.csv("~/uni/1014CSG/wikistats/data.csv")
 table(Project)
 Project<-as.factor(Project)
-EN<-Revisions[Project == "en.wikipedia.org"]
-DE<-Revisions[Project == "de.wikipedia.org"]
+en_revisions<-Revisions[Project == "en.wikipedia.org"]
+de_revisions<-Revisions[Project == "de.wikipedia.org"]
+en_length<-Length[Project == "en.wikipedia.org"]
+de_length<-Length[Project == "de.wikipedia.org"]
+
+
+summary(en_revisions)
+summary(de_revisions)
+summary(en_length)
+summary(de_length)
+
+x<-en_revisions
+m<-mean(x)
+sd<-sd(x)
+hist(x, freq=FALSE, ylab="Number of revisions", main="Number of revisions for EN")
+curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+
+x<-de_revisions
+m<-mean(x)
+sd<-sd(x)
+hist(x, freq=FALSE, ylab="Number of revisions", main="Number of revisions for DE")
+curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+
+x<-en_length
+m<-mean(x)
+sd<-sd(x)
+hist(x, freq=FALSE, ylab="Length of article", main="Length of article for EN")
+curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+
+x<-de_length
+m<-mean(x)
+sd<-sd(x)
+hist(x, freq=FALSE, ylab="Length of article", main="Length of article for DE")
+curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+
+boxplot(en_revisions)
+boxplot(de_revisions)
+boxplot(en_length)
+boxplot(de_length)
+
+qqnorm(Revisions)
+qqline(Revisions, main="QQ plot for article revisions EN vs DE")
+
+qqnorm(Length)
+qqline(Length, main="QQ plot for article length EN vs DE")
+
+
+
+###############################################################################
+
+
 logE <- log(EN)
 logD <- log(DE)
 
