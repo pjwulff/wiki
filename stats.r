@@ -55,36 +55,49 @@ kurtosis(en_revisions)
 x<-en_revisions
 m<-mean(x)
 sd<-sd(x)
-hist(x, xlab="Revisions", ylab="Frequency", main="Number of revisions for en.wikipedia.org")
-curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+H<-hist(x, freq=TRUE, xlab="Number of revisions", main="Number of revisions for en.wikipedia.org")
+dx<-min(diff(H$breaks))
+l<-length(x)
+curve(l * dx * dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-de_revisions
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, xlab="Revisions", main="Number of revisions for de.wikipedia.org")
-curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+=======
+H<-hist(x, freq=TRUE, xlab="Number of revisions", main="Number of revisions for de.wikipedia.org")
+dx<-min(diff(H$breaks))
+l<-length(x)
+curve(l * dx * dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-en_length
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, xlab="Length", main="Length of article for en.wikipedia.org")
-curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+=======
+H<-hist(x, freq=TRUE, xlab="Length of article", main="Length of article for en.wikipedia.org")
+dx<-min(diff(H$breaks))
+l<-length(x)
+curve(l * dx * dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-de_length
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, ylab="Length of article", main="Length of article for DE")
-curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
+H<-hist(x, freq=TRUE, xlab="Length of article", main="Length of article for de.wikipedia.org")
+dx<-min(diff(H$breaks))
+l<-length(x)
+curve(l * dx * dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 n<-c("en.wikipedia.org", "de.wikipedia.org")
-boxplot(en_revisions, de_revisions, names=n, main="Revisions")
-boxplot(en_length, de_length, names=n, main="Length")
 
-qqnorm(Revisions)
-qqline(Revisions, main="QQ plot for article revisions EN vs DE")
+boxplot(en_revisions, de_revisions, ylab="Number of revisions", names=n, main="Number of revisions per project")
+##boxplot(de_revisions)
+boxplot(en_length, de_length, ylab="Length of article", names=n, main="Length of article per project")
+##boxplot(de_length)
 
-qqnorm(Length)
-qqline(Length, main="QQ plot for article length EN vs DE")
+qqnorm(Revisions, ylab="Number of revisions", main="Article revisions")
+qqline(Revisions)
+
+qqnorm(Length, ylab="Article length", main="Article length")
+qqline(Length)
 
 
 
