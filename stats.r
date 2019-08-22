@@ -48,7 +48,7 @@ summary(de_per)
 IQR(en_revisions)
 IQR(de_revisions)
 IQR(en_length)
-IQR(en_length)
+IQR(de_length)
 IQR(en_per)
 IQR(de_per)
 skewness(en_revisions)
@@ -108,46 +108,4 @@ qqnorm(Revisions, ylab="Number of revisions", main="Article revisions")
 qqline(Revisions)
 
 qqnorm(Length, ylab="Article length", main="Article length")
-qqline(Length)
-
-
-
-###############################################################################
-
-
-logE <- log(EN)
-logD <- log(DE)
-
-Cdata<-cbind(EN, DE)
-cor(Cdata)
-pairs(Cdata)
-
-summary(EN)
-summary(DE)
-boxplot(Revisions~Project)
-IQR(EN)
-IQR(DE)
-
-hist(EN)
-hist(DE)
-x<-EN
-en_mean <- mean(EN)
-de_mean <- mean(DE)
-s<-sd(x)
-m<-mean(x)
-hist(EN, freq=FALSE, xlab="x values", ylab="density", main="histogram of EN")
-hist(logE, freq=FALSE, xlab="x values", ylab="density", main="histogram of EN")
-hist(logD, freq=FALSE, xlab="number of articles", ylab="log revisions", main="histogram of DE")
-boxplot(DE)
-boxplot(DE, type = "quantile", outlier=FALSE)
-boxplot(logE)
-box
-
-curve(dnorm(x, mean=m, sd=s), add=TRUE, col="hot pink", lwd=2)
-
-revis = Revisions
-summary(revis)
-en_mean
-de_mean
-qqnorm(Length)
 qqline(Length)
