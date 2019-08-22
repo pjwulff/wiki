@@ -6,29 +6,68 @@ en_revisions<-Revisions[Project == "en.wikipedia.org"]
 de_revisions<-Revisions[Project == "de.wikipedia.org"]
 en_length<-Length[Project == "en.wikipedia.org"]
 de_length<-Length[Project == "de.wikipedia.org"]
+en_per<-en_length/en_revisisions
+de_per<-de_length/de_revisions
+library("e1071")
 
+en_revisions_mean<-mean(en_revisions)
+en_revisions_sd<-sd(en_revisions)
+en_revisions_cv<-en_revisions_sd/en_revisions_mean
+en_revisions_cv
+
+de_revisions_mean<-mean(de_revisions)
+de_revisions_sd<-sd(de_revisions)
+de_revisions_cv<-de_revisions_sd/de_revisions_mean
+de_revisions_cv
+
+en_length_mean<-mean(en_length)
+en_length_sd<-sd(en_length)
+en_length_cv<-en_length_sd/en_length_mean
+en_length_cv
+
+de_length_mean<-mean(de_length)
+de_length_sd<-sd(de_length)
+de_length_cv<-de_length_sd/de_length_mean
+de_length_cv
+
+en_per_mean<-mean(en_per)
+en_per_sd<-sd(en_per)
+en_per_cv<-en_per_sd/en_per_mean
+en_per_cv
+
+de_per_mean<-mean(de_per)
+de_per_sd<-sd(de_per)
+de_per_cv<-de_per_sd/de_per_mean
+de_per_cv
 
 summary(en_revisions)
 summary(de_revisions)
 summary(en_length)
 summary(de_length)
+IQR(en_revisions)
+IQR(de_revisions)
+IQR(en_length)
+IQR(en_length)
+skewness(en_revisions)
+kurtosis(en_revisions)
+
 
 x<-en_revisions
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, ylab="Number of revisions", main="Number of revisions for EN")
+hist(x, xlab="Revisions", ylab="Frequency", main="Number of revisions for en.wikipedia.org")
 curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-de_revisions
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, ylab="Number of revisions", main="Number of revisions for DE")
+hist(x, freq=FALSE, xlab="Revisions", main="Number of revisions for de.wikipedia.org")
 curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-en_length
 m<-mean(x)
 sd<-sd(x)
-hist(x, freq=FALSE, ylab="Length of article", main="Length of article for EN")
+hist(x, freq=FALSE, xlab="Length", main="Length of article for en.wikipedia.org")
 curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
 x<-de_length
@@ -37,10 +76,9 @@ sd<-sd(x)
 hist(x, freq=FALSE, ylab="Length of article", main="Length of article for DE")
 curve(dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 
-boxplot(en_revisions)
-boxplot(de_revisions)
-boxplot(en_length)
-boxplot(de_length)
+n<-c("en.wikipedia.org", "de.wikipedia.org")
+boxplot(en_revisions, de_revisions, names=n, main="Revisions")
+boxplot(en_length, de_length, names=n, main="Length")
 
 qqnorm(Revisions)
 qqline(Revisions, main="QQ plot for article revisions EN vs DE")
