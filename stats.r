@@ -1,12 +1,11 @@
 attach(data)
-#data = read.csv("~/uni/1014CSG/wikistats/data.csv")
 table(Project)
 Project<-as.factor(Project)
 en_revisions<-Revisions[Project == "en.wikipedia.org"]
 de_revisions<-Revisions[Project == "de.wikipedia.org"]
 en_length<-Length[Project == "en.wikipedia.org"]
 de_length<-Length[Project == "de.wikipedia.org"]
-en_per<-en_length/en_revisisions
+en_per<-en_length/en_revisions
 de_per<-de_length/de_revisions
 library("e1071")
 
