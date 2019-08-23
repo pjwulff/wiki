@@ -12,32 +12,45 @@ library("e1071")
 en_revisions_mean<-mean(en_revisions)
 en_revisions_sd<-sd(en_revisions)
 en_revisions_cv<-en_revisions_sd/en_revisions_mean
+en_revisions_sd
 en_revisions_cv
 
 de_revisions_mean<-mean(de_revisions)
 de_revisions_sd<-sd(de_revisions)
 de_revisions_cv<-de_revisions_sd/de_revisions_mean
+de_revisions_sd
 de_revisions_cv
 
 en_length_mean<-mean(en_length)
 en_length_sd<-sd(en_length)
 en_length_cv<-en_length_sd/en_length_mean
+en_length_sd
 en_length_cv
 
 de_length_mean<-mean(de_length)
 de_length_sd<-sd(de_length)
 de_length_cv<-de_length_sd/de_length_mean
+de_length_sd
 de_length_cv
 
 en_per_mean<-mean(en_per)
 en_per_sd<-sd(en_per)
 en_per_cv<-en_per_sd/en_per_mean
+en_per_sd
 en_per_cv
 
 de_per_mean<-mean(de_per)
 de_per_sd<-sd(de_per)
 de_per_cv<-de_per_sd/de_per_mean
+de_per_sd
 de_per_cv
+
+stat.desc(en_revisions)
+stat.desc(de_revisions)
+stat.desc(en_length)
+stat.desc(de_length)
+stat.desc(en_per)
+stat.desc(de_par)
 
 summary(en_revisions)
 summary(de_revisions)
