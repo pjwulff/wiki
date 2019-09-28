@@ -5,6 +5,78 @@ en_revisions<-Revisions[Project == "en.wikipedia.org"]
 de_revisions<-Revisions[Project == "de.wikipedia.org"]
 en_length<-Length[Project == "en.wikipedia.org"]
 de_length<-Length[Project == "de.wikipedia.org"]
+
+# raw data
+shapiro.test(en_revisions)
+shapiro.test(de_revisions)
+leveneTest(Revisions, Project)
+
+# log transform
+shapiro.test(log(en_revisions))
+shapiro.test(log(de_revisions))
+leveneTest(log(Revisions), Project)
+
+# log1p transform
+shapiro.test(log1p(en_revisions))
+shapiro.test(log1p(de_revisions))
+leveneTest(log1p(Revisions), Project)
+
+# sqrt transform
+shapiro.test(sqrt(en_revisions))
+shapiro.test(sqrt(de_revisions))
+leveneTest(sqrt(Revisions), Project)
+
+# boxcox transform
+lambda<-boxcox(Revisions, objective.name="Shapiro-Wilk", optimize=TRUE, lambda=c(-6,6))$lambda
+transform<-function(x, lambda) {
+  (x^lambda - 1) / lambda
+}
+shapiro.test(transform(en_revisions, lambda))
+shapiro.test(transform(de_revisions, lambda))
+leveneTest(transform(Revisions, lambda), Project)
+
+# wilcox test
+wilcox.test(en_revisions, de_revisions, paired=FALSE)
+
+
+
+
+
+### OLD STUFF BELOW ###
+
+qqnorm(transform(en_revisions, lambda))
+qqline(transform(en_revisions, lambda))
+
+library("EnvStats")
+library("car")
+
+
+
+b<-boxcox(e_st, objective.name="Shapiro-Wilk", optimize=TRUE, lambda=c(-6,6))
+b$lambda
+lambda<-b$x[which.max(b$y)]
+lambda<-b$lambda
+lambda
+f<-function(x, lambda) {
+  (x^lambda - 1) / lambda
+}
+be<-f(e_st, lambda)
+shapiro.test(log1p(e_st))
+b_e_r<-boxcox(en_revisions ~ 1)
+lambda<-b_e_r$x[which.max(b_e_r$y)]
+mnew <- lm(((en_revisions^lambda-1)/lambda) ~ 1)
+mnew
+shapiro.test(mnew)
+
+wilcox.test(en_revisions, de_revisions, paired=FALSE)
+
+shapiro.test(en_revisions)
+shapiro.test(l_en_r)
+
+shapiro.test(rnorm(100, mean = 5, sd = 3))
+shapiro.test(runif(100, min = 2, max = 4))
+
+
 en_per<-en_length/en_revisions
 de_per<-de_length/de_revisions
 library("e1071")
@@ -50,7 +122,7 @@ stat.desc(de_revisions)
 stat.desc(en_length)
 stat.desc(de_length)
 stat.desc(en_per)
-stat.desc(de_par)
+stat.desc(de_per)
 
 summary(en_revisions)
 summary(de_revisions)
@@ -113,12 +185,12 @@ curve(l * dx * dnorm(x, mean=m, sd=sd), add=TRUE, col="red", lwd=2)
 n<-c("en.wikipedia.org", "de.wikipedia.org")
 
 boxplot(en_revisions, de_revisions, ylab="Number of revisions", names=n, main="Number of revisions per project")
-##boxplot(de_revisions)
 boxplot(en_length, de_length, ylab="Length of article", names=n, main="Length of article per project")
-##boxplot(de_length)
 
-qqnorm(Revisions, ylab="Number of revisions", main="Article revisions")
-qqline(Revisions)
+qqnorm(en_revisions, ylab="Number of revisions", main="English article revisions")
+qqline(en_revisions)
+qqnorm(de_revisions, ylab="Number of revisions", main="German article revisions")
+qqline(de_revisions)
 
 qqnorm(Length, ylab="Article length", main="Article length")
 qqline(Length)
